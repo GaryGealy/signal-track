@@ -41,12 +41,12 @@ A starting point for new projects using the HumanLayer Claude setup, pre-configu
 | Branch | Purpose |
 |--------|---------|
 | `main` | Active development — merge PRs here |
-| `cloudflare` | Production deploys — push `main` to this branch to deploy |
 
-To deploy to production:
-```bash
-git push origin main:cloudflare
-```
+## Deploying to Production
+
+Deploys are triggered by publishing a GitHub release. Use the `/cut-a-release` skill to run the full release workflow, which handles versioning, changelog, and GitHub release creation automatically.
+
+The deploy pipeline (`.github/workflows/deploy.yml`) runs on the `release: published` event.
 
 ## Global Plugins
 
