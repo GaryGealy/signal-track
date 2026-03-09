@@ -1,4 +1,6 @@
-name: Deploy
+name: Deploy to Cloudflare Pages
+
+# Triggered by publishing a GitHub release (via /cut-a-release skill)
 
 on:
   release:
@@ -7,9 +9,52 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
+    name: Deploy to Production
+
     steps:
-      - name: Placeholder deploy
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: 'app/package-lock.json'
+
+      - name: Install dependencies
+        working-directory: app
+        run: npm ci
+
+      - name: Build application
+        working-directory: app
+        run: npm run build
+
+      # Replace signal-track-db with the D1 database name from wrangler.toml
+      - name: Run D1 migrations
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: "app"
+          command: d1 migrations apply signal-track-db --remote
+
+      # Replace signal-track with your Cloudflare Pages project name
+      - name: Deploy to Cloudflare Pages
+        id: deploy
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: "app"
+          command: pages deploy .svelte-kit/cloudflare --project-name=signal-track
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Output deployment URLs
         run: |
-          echo "Release ${{ github.event.release.tag_name }} published — deploy would run here."
-          echo "Release notes:"
-          echo "${{ github.event.release.body }}"
+          echo "Deployment successful!"
+          echo "Production URL: ${{ steps.deploy.outputs.deployment-url }}"
+          echo "Preview URL: ${{ steps.deploy.outputs.pages-deployment-alias-url }}"
