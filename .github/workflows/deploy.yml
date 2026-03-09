@@ -1,0 +1,15 @@
+name: Deploy
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Placeholder deploy
+        run: |
+          echo "Release ${{ github.event.release.tag_name }} published — deploy would run here."
+          echo "Release notes:"
+          echo "${{ github.event.release.body }}"

@@ -1,0 +1,62 @@
+name: Deploy to Cloudflare Pages
+
+# Triggered by pushing to the cloudflare branch:
+#   git push origin main:cloudflare
+
+on:
+  push:
+    branches:
+      - cloudflare
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
+    name: Deploy to Production
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: 'app/package-lock.json'
+
+      - name: Install dependencies
+        working-directory: app
+        run: npm ci
+
+      - name: Build application
+        working-directory: app
+        run: npm run build
+
+      # Replace YOUR_DB_NAME with the D1 database name from wrangler.toml
+      - name: Run D1 migrations
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: "app"
+          command: d1 migrations apply YOUR_DB_NAME --remote
+
+      # Replace YOUR_PROJECT_NAME with your Cloudflare Pages project name
+      - name: Deploy to Cloudflare Pages
+        id: deploy
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: "app"
+          command: pages deploy .svelte-kit/cloudflare --project-name=YOUR_PROJECT_NAME
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Output deployment URLs
+        run: |
+          echo "Deployment successful!"
+          echo "Production URL: ${{ steps.deploy.outputs.deployment-url }}"
+          echo "Preview URL: ${{ steps.deploy.outputs.pages-deployment-alias-url }}"
