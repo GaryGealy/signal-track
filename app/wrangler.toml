@@ -1,0 +1,10 @@
+name = "signal-track"
+compatibility_date = "2025-01-01"
+compatibility_flags = ["nodejs_compat"]
+pages_build_output_dir = ".svelte-kit/cloudflare"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "signal-track-db"
+database_id = "0111f923-e8ac-49f3-ac8c-87179ae78aaf"
+migrations_dir = "migrations"
