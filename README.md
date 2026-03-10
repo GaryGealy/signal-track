@@ -44,9 +44,35 @@ A starting point for new projects using the HumanLayer Claude setup, pre-configu
 
 ## Deploying to Production
 
-Deploys are triggered by publishing a GitHub release. Use the `/cut-a-release` skill to run the full release workflow, which handles versioning, changelog, and GitHub release creation automatically.
+### One-time setup
 
-The deploy pipeline (`.github/workflows/deploy.yml`) runs on the `release: published` event.
+Before your first deploy, create the Cloudflare Pages project:
+
+```bash
+cd app && npx wrangler login
+npx wrangler pages project create <your-app-name> --production-branch=main
+```
+
+Also add these secrets to your GitHub repo under **Settings → Secrets and variables → Actions**:
+
+| Secret | Where to find it |
+|--------|-----------------|
+| `CLOUDFLARE_API_TOKEN` | Cloudflare dashboard → My Profile → API Tokens (needs Pages + D1 edit permissions) |
+| `CLOUDFLARE_ACCOUNT_ID` | Cloudflare dashboard → right sidebar on any page |
+
+**Do not connect your GitHub repo in the Cloudflare dashboard** — that creates a duplicate build pipeline that will fail.
+
+### Deploying
+
+Deploys are triggered by publishing a GitHub release. Use `/cut-a-release` to run the full release workflow — it handles versioning, changelog, and GitHub release creation automatically.
+
+To trigger a deploy manually without a new release:
+
+```bash
+gh workflow run "Deploy to Cloudflare Pages"
+```
+
+The deploy pipeline (`.github/workflows/deploy.yml`) runs on `release: published` and `workflow_dispatch`.
 
 ## Global Plugins
 
