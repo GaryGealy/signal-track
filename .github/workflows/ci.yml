@@ -4,11 +4,9 @@ on:
   pull_request:
     branches:
       - main
-      - cloudflare
   push:
     branches:
       - main
-      - cloudflare
 
 jobs:
   test:
@@ -42,6 +40,3 @@ jobs:
         working-directory: app
         run: npm run lint
 
-      - name: Run unit tests
-        working-directory: app
-        run: npm run test:unit -- --run

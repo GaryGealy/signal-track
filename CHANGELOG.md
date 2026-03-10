@@ -7,17 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.1.0] - 2026-02-26
+## [0.1.0] - 2026-03-09
 
 ### Added
-- `cut-a-release` skill with 4-phase release workflow (analysis, confirmation, release prep, post-merge finalization)
-- Design doc and implementation plan for `cut-a-release`
-- GitHub Actions deploy workflow triggered on GitHub release publication
-- Claude agents, commands, and plugin structure for research/plan/implement workflow
-- Setup scripts for app and Cloudflare Workers
-- shadcn-svelte components config and base CSS
-- README, CONTRIBUTING, LICENSE, .gitignore
-- Tech stack doc and thoughts directory
+- SvelteKit app with shadcn-svelte UI components (accordion, badge, button, card, checkbox, dialog, input, label, select, separator, skeleton, switch, tooltip)
+- Drizzle ORM setup with D1 database schema and initial migration
+- Cloudflare Pages deploy pipeline triggered on GitHub release publish
+- GitHub Actions CI workflow
+- wrangler.toml Cloudflare Pages configuration
+- Cloudflare setup script (scripts/setup-cloudflare.sh)
 
-[Unreleased]: https://github.com/GaryGealy/humanlayer-scaffolding/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/GaryGealy/humanlayer-scaffolding/compare/v0.0.0...v0.1.0
+### Changed
+- README updated to document release-based deploy strategy
+- deploy.yml updated from cloudflare branch trigger to `release: published`
+- .gitignore updated to exclude .wrangler/
+
+[Unreleased]: https://github.com/GaryGealy/signal-track/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/GaryGealy/signal-track/compare/v0.0.0...v0.1.0
