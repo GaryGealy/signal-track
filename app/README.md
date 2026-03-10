@@ -39,4 +39,4 @@ npm run build
 
 You can preview the production build with `npm run preview`.
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+> This app uses `@sveltejs/adapter-cloudflare` and deploys to Cloudflare Pages via GitHub Actions. See the root `README.md` for the full deploy workflow.

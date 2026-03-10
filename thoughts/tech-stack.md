@@ -175,29 +175,28 @@ Two GitHub Actions workflows in `.github/workflows/`:
 2. Install Playwright browsers
 3. `npm run check` — type checking
 4. `npm run lint` — linting
-5. `npm run test:unit -- --run` — unit tests
 
-### `deploy.yml` — Runs on push to `cloudflare` branch
+### `deploy.yml` — Runs on `release: published` and `workflow_dispatch`
 
 1. `npm ci`
 2. `npm run build`
 3. `wrangler d1 migrations apply <db-name> --remote`
 4. `wrangler pages deploy`
 
-To deploy to production:
+To deploy to production, use the `/cut-a-release` skill — it handles versioning, changelog, and GitHub release creation, which triggers the deploy pipeline automatically.
+
+To trigger a deploy manually without a new release:
 
 ```bash
-git push origin main:cloudflare
+gh workflow run "Deploy to Cloudflare Pages"
 ```
 
 ### Required GitHub Secrets
 
 | Secret | Purpose |
 |--------|---------|
-| `CLOUDFLARE_API_TOKEN` | Cloudflare API authentication |
+| `CLOUDFLARE_API_TOKEN` | Cloudflare API authentication — needs Pages and D1 edit permissions |
 | `CLOUDFLARE_ACCOUNT_ID` | Cloudflare account ID |
-| `CLOUDFLARE_DATABASE_ID` | D1 database ID |
-| `CLOUDFLARE_D1_TOKEN` | D1-specific token |
 
 Add these under **Settings → Secrets and variables → Actions** in your GitHub repo.
 
@@ -214,15 +213,17 @@ All infrastructure runs on **Cloudflare**.
 
 ### Cloudflare Pages Setup
 
-GitHub Actions is the sole deployment mechanism. The Cloudflare Pages project is created automatically on the first deploy via `wrangler pages deploy` in the Actions workflow.
-
-**Do not connect your GitHub repo in the Cloudflare dashboard.** Doing so enables a direct Git integration build that runs separately from GitHub Actions and will fail (it runs `npm run build` from the repo root, where there is no `package.json`).
-
-To deploy to production, push to the `cloudflare` branch:
+GitHub Actions is the sole deployment mechanism. Before the first deploy, you must create the Cloudflare Pages project manually:
 
 ```bash
-git push origin main:cloudflare
+cd app
+npx wrangler login
+npx wrangler pages project create <your-app-name> --production-branch=main
 ```
+
+This is a one-time step. After the project exists, all future deploys are triggered automatically by publishing a GitHub release via `/cut-a-release`.
+
+**Do not connect your GitHub repo in the Cloudflare dashboard.** Doing so enables a direct Git integration build that runs separately from GitHub Actions and will fail (it runs `npx wrangler deploy` without building the app first).
 
 Add any environment variables under **Workers & Pages → your project → Settings → Variables** in the Cloudflare dashboard after the first deploy.
 
