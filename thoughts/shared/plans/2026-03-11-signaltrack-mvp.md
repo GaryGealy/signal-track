@@ -54,98 +54,43 @@ CRUD operations functional, type check and lint pass.
 
 ## Phase 1: Database Schema
 
-### Overview
+> **Status: SUPERSEDED** — `users` and `metric_entries` tables are fully defined and implemented in the dashboard plan (`docs/superpowers/plans/2026-03-12-signaltrack-dashboard.md`, Task 1). Execute that plan first.
+>
+> **Remaining work for this phase:** Phase 2 (Auth) requires a `sessions` table that the dashboard plan does not include. Add it to the existing schema at the start of Phase 2 — see the note there.
 
-Replace the placeholder `task` table with the three tables needed for SignalTrack:
-`users`, `sessions`, and `metric_entries`. Use `db:push` during development,
-generate the final migration at the end of this phase.
+### For reference: full intended schema
 
-### Changes Required
-
-#### 1. Replace schema
-
-**File**: `app/src/lib/server/db/schema.ts`
-**Changes**: Delete `task` table, define `users`, `sessions`, `metric_entries`
+The dashboard plan creates `users` + `metric_entries`. The sessions table below is added in Phase 2.
 
 ```typescript
-import { sqliteTable, text, real, integer } from 'drizzle-orm/sqlite-core';
-
-export const users = sqliteTable('users', {
-  id: text('id').primaryKey().$defaultFn(() => crypto.randomUUID()),
-  email: text('email').notNull().unique(),
-  passwordHash: text('password_hash').notNull(),
-  name: text('name').notNull(),
-  createdAt: integer('created_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
-  updatedAt: integer('updated_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
-});
-
 export const sessions = sqliteTable('sessions', {
   id: text('id').primaryKey().$defaultFn(() => crypto.randomUUID()),
   userId: text('user_id').notNull().references(() => users.id),
   expiresAt: integer('expires_at', { mode: 'timestamp' }).notNull(),
   createdAt: integer('created_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
 });
-
-export const metricEntries = sqliteTable('metric_entries', {
-  id: text('id').primaryKey().$defaultFn(() => crypto.randomUUID()),
-  userId: text('user_id').notNull().references(() => users.id),
-  metricType: text('metric_type', {
-    enum: ['weight', 'blood_pressure', 'sleep', 'work']
-  }).notNull(),
-  valueNumeric: real('value_numeric'),
-  valueSecondary: real('value_secondary'),   // diastolic for blood pressure
-  valueDuration: integer('value_duration'),  // minutes for sleep/work
-  recordedAt: integer('recorded_at', { mode: 'timestamp' }).notNull(),
-  createdAt: integer('created_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
-});
 ```
 
-#### 2. Update App.Locals type
+### Success Criteria (verify after dashboard plan completes)
 
-**File**: `app/src/app.d.ts`
-**Changes**: Add `user` and `session` to `App.Locals`
-
-```typescript
-import type { users, sessions } from '$lib/server/db/schema';
-
-declare global {
-  namespace App {
-    interface Locals {
-      user: typeof users.$inferSelect | null;
-      session: typeof sessions.$inferSelect | null;
-    }
-  }
-}
-export {};
-```
-
-#### 3. Apply schema and generate migration
-
-```bash
-cd app
-npm run db:push           # apply locally during dev
-npm run db:generate       # generate migration file when schema is finalized
-```
-
-### Success Criteria
-
-#### Automated Verification
-- [ ] Schema applies cleanly: `npm run db:push`
-- [ ] Migration generates without errors: `npm run db:generate`
+- [ ] `npm run db:studio` shows `users` and `metric_entries` tables with correct columns
 - [ ] Type check passes: `npm run check`
-
-#### Manual Verification
-- [ ] `npm run db:studio` shows `users`, `sessions`, `metric_entries` tables with correct columns
 
 ---
 
 ## Phase 2: Auth System
+
+> **Prerequisites:** Dashboard plan complete. `users` and `metric_entries` tables exist in the schema.
+>
+> **First step of this phase:** Add the `sessions` table to `app/src/lib/server/db/schema.ts` (see Phase 1 for the definition), then run `npm run db:push` and `npm run db:generate`.
 
 ### Overview
 
 Implement session-based authentication: register, login, logout. Session token
 stored in an httpOnly, Secure, SameSite=Strict cookie. All auth logic in
 `src/lib/server/auth.ts`. Route guard in root `+layout.server.ts`.
+
+Move dashboard routes from `app/src/routes/dashboard/` into a `(app)` route group (`app/src/routes/(app)/dashboard/`) so the auth guard layout applies. Remove the stubbed auth from `+layout.server.ts` and replace with real session validation.
 
 ### Changes Required
 
@@ -364,11 +309,11 @@ All dashboard routes will live under `app/src/routes/(app)/` route group.
 
 ## Phase 3: App Layout & Navigation
 
+> **Prerequisites:** Phase 2 (Auth) complete. Routes are now under `(app)` route group with session guard.
+
 ### Overview
 
-Replace the root layout with the full app shell: responsive navigation
-(bottom tab bar on mobile/tablet, left sidebar on desktop). Uses Tailwind
-breakpoints — bottom tabs at `< lg`, sidebar at `lg+`.
+Extend the dashboard layout with full responsive navigation: the existing bottom tab bar (already built in the dashboard plan) gains a **desktop left sidebar** at `lg+`. Update `app/src/routes/(app)/+layout.svelte` to show the sidebar on desktop while keeping the bottom tab bar on mobile/tablet. Uses Tailwind breakpoints — `< lg` bottom tabs, `lg+` sidebar.
 
 ### Changes Required
 
@@ -471,11 +416,32 @@ npm install layerchart
 
 ## Phase 4: Dashboard Page
 
-### Overview
+> **Status: SUPERSEDED** — The dashboard page (`/dashboard`) with metric summary cards, sparklines, bottom tab bar, and seed data is fully implemented by the dashboard plan (`docs/superpowers/plans/2026-03-12-signaltrack-dashboard.md`).
+>
+> **Remaining work:** After Phase 2 wires real auth, update `MetricCard` to handle the empty state (no data) per the design spec (`docs/superpowers/specs/2026-03-12-signaltrack-warmth-dashboard-design.md`, Section 8). The card structure itself does not change.
 
-Build `/dashboard` with 4 summary cards — one per metric. Each card shows
-the metric name, latest value, a sparkline (7-day trend), and an Add button.
-Empty state includes icon + message + Add CTA.
+### Empty state addition (post-auth only)
+
+In `app/src/lib/components/MetricCard.svelte`, add a conditional in the value+sparkline row:
+
+```svelte
+{#if sparklineValues.length === 0}
+  <!-- Empty state -->
+  <div class="flex items-center gap-2 py-1">
+    <Icon size={18} style="color: var(--color-text-muted);" />
+    <span class="text-[13px]" style="color: var(--color-text-muted);">
+      No entries yet. Add your first reading.
+    </span>
+  </div>
+{:else}
+  <!-- existing value + sparkline row -->
+{/if}
+```
+
+### Success Criteria
+
+- [ ] Dashboard renders with real user data after login
+- [ ] Empty state shows on cards when no entries exist for that metric
 
 ### Changes Required
 
@@ -544,6 +510,8 @@ Uses: Card, Button, Skeleton from shadcn-svelte; Layerchart for sparkline.
 ---
 
 ## Phase 5: Add Entry Modal
+
+> **Prerequisites:** Phases 2–4 complete. Real auth in place, dashboard rendering with live user data.
 
 ### Overview
 
@@ -640,6 +608,8 @@ Form fields per metric per UI spec:
 ---
 
 ## Phase 6: Metric Detail Pages
+
+> **Prerequisites:** Phase 5 complete. Add entry modal working end-to-end.
 
 ### Overview
 
@@ -745,8 +715,9 @@ with the entry's current values. On save, sends a PUT to `/api/metrics/:id`.
 
 ## References
 
-- Product spec: `docs/specs/SignalTrack_Product_Spec_v1.md`
-- UI spec: `docs/specs/SignalTrack_UI_Spec_v1.md`
-- Tech stack: `thoughts/tech-stack.md`
+- **Execute first:** `docs/superpowers/plans/2026-03-12-signaltrack-dashboard.md`
+- Product spec: `thoughts/specs/SignalTrack_Product_Spec_v1.md`
+- UI spec: `thoughts/specs/SignalTrack_UI_Spec_v1.md`
+- Design spec (Warmth): `docs/superpowers/specs/2026-03-12-signaltrack-warmth-dashboard-design.md`
 - DB schema: `app/src/lib/server/db/schema.ts`
 - DB client: `app/src/lib/server/db/index.ts`

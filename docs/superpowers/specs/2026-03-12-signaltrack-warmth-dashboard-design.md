@@ -104,19 +104,86 @@ Personal, inviting, warm. SignalTrack is a health journal you *want* to open —
 
 ---
 
-## 7. Scope Boundaries
+## 7. Login Page (`/login`)
 
-This spec covers **the dashboard summary screen only**. The following are out of scope and will be specced separately after further design exploration:
+Standard centered form on the cream background. No sidebar, no tab bar.
+
+### Layout
+- Full-screen `--color-bg` background
+- Vertically centered card: white surface, 20px border-radius, 1px warm border, 32px padding
+- Card max-width: 390px (fills mobile viewport edge-to-edge with 0px margin on mobile; centered with auto margins on larger screens)
+
+### Content (top to bottom)
+1. **Wordmark** — "SignalTrack" in DM Sans 22px weight 700, `--color-text-primary`, centered
+2. **Tagline** — "Your signals, your story." in 13px muted, centered, 8px below wordmark
+3. **Email field** — full-width, label "Email", standard text input styled with `--color-border` border, `--color-text-primary` value, 12px border-radius
+4. **Password field** — full-width, label "Password", same style as email
+5. **Sign in button** — full-width filled pill, `--color-accent` bg, white text, 14px border-radius, 48px height, "Sign in" label 15px semibold
+6. **Register link** — "Don't have an account? Sign up" centered below button, muted 13px, "Sign up" in accent color
+
+### States
+- Input focus: `--color-accent` 1.5px border (matches add entry sheet inputs)
+- Error: red-tinted border + small error message below field (use Tailwind `destructive` token from shadcn-svelte)
+- Loading: button shows spinner, disabled
+
+---
+
+## 8. Empty States
+
+Used on dashboard summary cards (no data yet) and metric detail pages (no entries in selected range).
+
+### Summary Card Empty State
+
+Replaces the value + sparkline row inside the metric card:
+
+```
+┌─────────────────────────────────────────┐
+│ [icon chip] Label            [+ Add]    │
+│                                         │
+│  [icon]  No entries yet.                │
+│          Add your first reading.        │
+└─────────────────────────────────────────┘
+```
+
+- Icon: same lucide icon as the metric, 18px, `--color-text-muted`
+- Message: "No entries yet." 13px weight 500 `--color-text-primary` + "Add your first reading." 12px muted — displayed inline or stacked
+- No sparkline rendered
+
+### Detail Page Empty State
+
+Replaces the chart area on metric detail pages:
+
+```
+┌──────────────────────────────────────────────────┐
+│                                                  │
+│            [icon 32px muted]                     │
+│         No entries yet.                          │
+│    Add your first reading to see your trend.     │
+│                                                  │
+│         [  + Add entry  ]  ← accent pill         │
+│                                                  │
+└──────────────────────────────────────────────────┘
+```
+
+- Container: full chart-area height (same dimensions as populated chart), centered content
+- Icon: lucide metric icon, 32px, `--color-accent-bg` chip background (40×40px, 12px radius)
+- Headline: "No entries yet." 16px weight 600 `--color-text-primary`
+- Subtext: "Add your first reading to see your trend." 13px muted
+- CTA: accent filled pill button, "+ Add entry", same style as dashboard add button but wider (full content width capped at 180px)
+
+---
+
+## 9. Scope Boundaries
+
+This spec covers the dashboard summary screen, login page, and empty state patterns. The following are out of scope and will be specced separately:
 
 - Metric detail pages (`/dashboard/weight`, etc.)
 - Add entry modal / bottom sheet
-- Empty states
-- Authentication UI
 - Desktop layout
 
 ---
 
-## 8. Implementation Notes
+## 10. Implementation Notes
 
 - No external chart library needed for sparklines — inline SVG paths are sufficient at this size
 - DM Sans loaded via Google Fonts `<link>` in `app.html`
@@ -124,3 +191,5 @@ This spec covers **the dashboard summary screen only**. The following are out of
 - Lucide Svelte (`lucide-svelte`) is already installed and used for icons
 - Tab bar is part of the `/dashboard` layout, not the root layout
 - Auth is stubbed in this iteration — `+page.server.ts` returns seed data; real auth wired in a future plan
+- Login page uses shadcn-svelte `Card`, `Input`, and `Button` components — no custom primitives needed
+- Empty states are inline conditionals in `MetricCard.svelte` and the detail page layout — no separate component required
