@@ -28,13 +28,9 @@
 
 	// Greeting based on time of day
 	const hour = new Date().getHours();
-	const greeting = $derived(
-		hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening'
-	);
+	const greeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
 
-	const dateLabel = $derived(
-		new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' })
-	);
+	const dateLabel = new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' });
 </script>
 
 <div class="flex flex-col px-5 pb-6">
