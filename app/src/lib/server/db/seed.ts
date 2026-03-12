@@ -1,6 +1,11 @@
-import { db } from './index';
+import Database from 'better-sqlite3';
+import { drizzle } from 'drizzle-orm/better-sqlite3';
+import * as schema from './schema';
 import { users, metricEntries } from './schema';
 import { eq } from 'drizzle-orm';
+
+const client = new Database(process.env.DATABASE_URL ?? './local.db');
+const db = drizzle(client, { schema });
 
 const DEV_USER_ID = 'dev-user-001';
 
