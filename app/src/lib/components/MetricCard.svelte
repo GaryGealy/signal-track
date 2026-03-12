@@ -1,10 +1,10 @@
 <script lang="ts">
-	import type { ComponentType, SvelteComponent } from 'svelte';
+	import type { Component, ComponentType } from 'svelte';
 	import Sparkline from './Sparkline.svelte';
 
 	interface Props {
 		label: string;
-		icon: ComponentType<SvelteComponent>;
+		icon: Component<any> | ComponentType<any>;
 		href: string;
 		primaryValue: string;
 		primaryUnit?: string;

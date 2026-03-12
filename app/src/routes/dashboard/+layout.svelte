@@ -6,10 +6,10 @@
 
 	const tabs = [
 		{ label: 'Home', icon: LayoutGrid, href: '/dashboard' },
-		{ label: 'Wt', icon: User, href: '/dashboard/weight' },
+		{ label: 'Weight', icon: User, href: '/dashboard/weight' },
 		{ label: 'BP', icon: Droplets, href: '/dashboard/blood-pressure' },
-		{ label: 'Slp', icon: Moon, href: '/dashboard/sleep' },
-		{ label: 'Wrk', icon: Briefcase, href: '/dashboard/work' }
+		{ label: 'Sleep', icon: Moon, href: '/dashboard/sleep' },
+		{ label: 'Work', icon: Briefcase, href: '/dashboard/work' }
 	];
 </script>
 
