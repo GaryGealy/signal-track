@@ -15,7 +15,7 @@
 	let {
 		points,
 		color = 'var(--color-accent)',
-		secondaryColor = '#E8A882',
+		secondaryColor = '#1e4475',
 		formatY = (v: number) => String(Math.round(v))
 	}: Props = $props();
 

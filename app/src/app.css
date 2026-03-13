@@ -25,14 +25,14 @@
 		--ring: 222.2 84% 4.9%;
 		--radius: 0.5rem;
 
-		/* Design B — Warmth tokens */
-		--color-bg: #faf7f2;
+		/* Design — Teal tokens */
+		--color-bg: #f0f8f8;
 		--color-surface: #ffffff;
-		--color-border: #efe8de;
-		--color-text-primary: #2c1a0e;
-		--color-text-muted: #9a7e6a;
-		--color-accent: #c4622d;
-		--color-accent-bg: #fdf0e8;
+		--color-border: #d0eae8;
+		--color-text-primary: #112236;
+		--color-text-muted: #5a7a8a;
+		--color-accent: #1e9e94;
+		--color-accent-bg: #e0f5f4;
 	}
 }
 

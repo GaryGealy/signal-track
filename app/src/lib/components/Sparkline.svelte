@@ -14,7 +14,7 @@
 		height = 36,
 		color = 'var(--color-accent)',
 		secondaryValues,
-		secondaryColor = '#E8A882'
+		secondaryColor = '#1e4475'
 	}: Props = $props();
 
 	function buildPath(data: number[], w: number, h: number): string {

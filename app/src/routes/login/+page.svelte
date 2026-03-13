@@ -77,7 +77,7 @@
 						type="email"
 						autocomplete="email"
 						bind:value={$loginForm.email}
-						class="rounded-[10px] border px-4 py-3 text-[15px] outline-none focus:ring-2 focus:ring-[#C4622D]"
+						class="rounded-[10px] border px-4 py-3 text-[15px] outline-none focus:ring-2 focus:ring-[#1e9e94]"
 						style="border-color: {$loginErrors.email
 							? '#EF4444'
 							: 'var(--color-border)'}; color: var(--color-text-primary); background: var(--color-surface);"
@@ -101,7 +101,7 @@
 						type="password"
 						autocomplete="current-password"
 						bind:value={$loginForm.password}
-						class="rounded-[10px] border px-4 py-3 text-[15px] outline-none focus:ring-2 focus:ring-[#C4622D]"
+						class="rounded-[10px] border px-4 py-3 text-[15px] outline-none focus:ring-2 focus:ring-[#1e9e94]"
 						style="border-color: {$loginErrors.password
 							? '#EF4444'
 							: 'var(--color-border)'}; color: var(--color-text-primary); background: var(--color-surface);"
@@ -153,7 +153,7 @@
 						type="text"
 						autocomplete="name"
 						bind:value={$registerForm.name}
-						class="rounded-[10px] border px-4 py-3 text-[15px] outline-none focus:ring-2 focus:ring-[#C4622D]"
+						class="rounded-[10px] border px-4 py-3 text-[15px] outline-none focus:ring-2 focus:ring-[#1e9e94]"
 						style="border-color: {$registerErrors.name
 							? '#EF4444'
 							: 'var(--color-border)'}; color: var(--color-text-primary); background: var(--color-surface);"
@@ -177,7 +177,7 @@
 						type="email"
 						autocomplete="email"
 						bind:value={$registerForm.email}
-						class="rounded-[10px] border px-4 py-3 text-[15px] outline-none focus:ring-2 focus:ring-[#C4622D]"
+						class="rounded-[10px] border px-4 py-3 text-[15px] outline-none focus:ring-2 focus:ring-[#1e9e94]"
 						style="border-color: {$registerErrors.email
 							? '#EF4444'
 							: 'var(--color-border)'}; color: var(--color-text-primary); background: var(--color-surface);"
@@ -201,7 +201,7 @@
 						type="password"
 						autocomplete="new-password"
 						bind:value={$registerForm.password}
-						class="rounded-[10px] border px-4 py-3 text-[15px] outline-none focus:ring-2 focus:ring-[#C4622D]"
+						class="rounded-[10px] border px-4 py-3 text-[15px] outline-none focus:ring-2 focus:ring-[#1e9e94]"
 						style="border-color: {$registerErrors.password
 							? '#EF4444'
 							: 'var(--color-border)'}; color: var(--color-text-primary); background: var(--color-surface);"
