@@ -13,6 +13,18 @@ export const users = sqliteTable('users', {
     .$defaultFn(() => new Date())
 });
 
+export const sessions = sqliteTable('sessions', {
+  id: text('id')
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  userId: text('user_id')
+    .notNull()
+    .references(() => users.id),
+  expiresAt: integer('expires_at', { mode: 'timestamp' }).notNull(),
+  createdAt: integer('created_at', { mode: 'timestamp' })
+    .$defaultFn(() => new Date())
+});
+
 export const metricEntries = sqliteTable(
   'metric_entries',
   {
@@ -43,3 +55,7 @@ export const metricEntries = sqliteTable(
 export type MetricType = 'weight' | 'blood_pressure' | 'sleep' | 'work';
 export type MetricEntry = typeof metricEntries.$inferSelect;
 export type NewMetricEntry = typeof metricEntries.$inferInsert;
+
+export type User = typeof users.$inferSelect;
+export type Session = typeof sessions.$inferSelect;
+export type NewSession = typeof sessions.$inferInsert;
