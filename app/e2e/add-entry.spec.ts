@@ -1,17 +1,5 @@
 import { test, expect } from '@playwright/test';
-
-const testPassword = 'password123';
-
-async function registerAndGoToDashboard(page: import('@playwright/test').Page) {
-  const email = `test-${Date.now()}-${Math.random().toString(36).slice(2)}@example.com`;
-  await page.goto('/login');
-  await page.getByRole('button', { name: 'Sign up' }).click();
-  await page.getByLabel('Name').fill('Test User');
-  await page.getByLabel('Email').fill(email);
-  await page.getByLabel('Password').fill(testPassword);
-  await page.getByRole('button', { name: 'Create account' }).click();
-  await expect(page).toHaveURL('/dashboard');
-}
+import { registerAndGoToDashboard } from './helpers';
 
 test('add weight entry updates dashboard', async ({ page }) => {
   await registerAndGoToDashboard(page);
@@ -70,6 +58,8 @@ test('add work entry using quick add preset', async ({ page }) => {
   await page.getByRole('button', { name: 'Save entry' }).click();
 
   await expect(page.getByRole('heading', { name: 'Log work hours' })).not.toBeVisible();
+  // Dashboard work card should show hours logged
+  await expect(page.getByText('8')).toBeVisible();
 });
 
 test('weight validation shows error for empty value', async ({ page }) => {
@@ -81,6 +71,7 @@ test('weight validation shows error for empty value', async ({ page }) => {
 
   // Error message visible, sheet stays open
   await expect(page.getByRole('heading', { name: 'Weight' })).toBeVisible();
+  await expect(page.getByText('Weight must be positive')).toBeVisible();
 });
 
 test('closing sheet with X button works', async ({ page }) => {
