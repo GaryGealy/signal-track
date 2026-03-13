@@ -59,34 +59,48 @@
 		</button>
 	</div>
 
-	<!-- Value + sparkline row -->
-	<div class="flex items-end justify-between">
-		<!-- Value display -->
-		<div class="flex items-baseline gap-1">
-			<span
-				class="text-[38px] font-bold leading-none tracking-[-0.04em]"
-				style="color: var(--color-text-primary);"
-			>
-				{primaryValue}
-			</span>
-			{#if primaryUnit}
-				<span class="pb-1 text-[15px]" style="color: var(--color-text-muted);">{primaryUnit}</span>
-			{/if}
-			{#if secondaryValue}
-				<span
-					class="text-[22px] font-light tracking-[-0.02em]"
-					style="color: var(--color-text-muted);"
-				>
-					{secondaryValue}
-				</span>
-			{/if}
-			{#if secondaryUnit}
-				<span class="pb-1 text-[12px]" style="color: var(--color-text-muted);">{secondaryUnit}</span
-				>
-			{/if}
+	<!-- Value + sparkline row (or empty state) -->
+	{#if sparklineValues.length === 0}
+		<div class="flex items-center gap-2">
+			<Icon size={18} style="color: var(--color-text-muted);" />
+			<div>
+				<p class="text-[13px] font-medium" style="color: var(--color-text-primary);">
+					No entries yet.
+				</p>
+				<p class="text-[12px]" style="color: var(--color-text-muted);">Add your first reading.</p>
+			</div>
 		</div>
+	{:else}
+		<div class="flex items-end justify-between">
+			<!-- Value display -->
+			<div class="flex items-baseline gap-1">
+				<span
+					class="text-[38px] font-bold leading-none tracking-[-0.04em]"
+					style="color: var(--color-text-primary);"
+				>
+					{primaryValue}
+				</span>
+				{#if primaryUnit}
+					<span class="pb-1 text-[15px]" style="color: var(--color-text-muted);">{primaryUnit}</span
+					>
+				{/if}
+				{#if secondaryValue}
+					<span
+						class="text-[22px] font-light tracking-[-0.02em]"
+						style="color: var(--color-text-muted);"
+					>
+						{secondaryValue}
+					</span>
+				{/if}
+				{#if secondaryUnit}
+					<span class="pb-1 text-[12px]" style="color: var(--color-text-muted);"
+						>{secondaryUnit}</span
+					>
+				{/if}
+			</div>
 
-		<!-- Sparkline -->
-		<Sparkline values={sparklineValues} secondaryValues={sparklineSecondaryValues} />
-	</div>
+			<!-- Sparkline -->
+			<Sparkline values={sparklineValues} secondaryValues={sparklineSecondaryValues} />
+		</div>
+	{/if}
 </div>
