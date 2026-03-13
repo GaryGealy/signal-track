@@ -35,6 +35,7 @@
 		return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 	}
 	function yesterdayDate() {
+		// eslint-disable-next-line svelte/prefer-svelte-reactivity
 		const d = new Date();
 		d.setDate(d.getDate() - 1);
 		return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
@@ -77,6 +78,7 @@
 
 	function applyWorkPreset(hours: number) {
 		const [h, m] = workStart.split(':').map(Number);
+		// eslint-disable-next-line svelte/prefer-svelte-reactivity
 		const end = new Date();
 		end.setHours(h + hours, m, 0, 0);
 		// Note: if start + hours rolls past midnight (e.g. 22:00 + 4h = 02:00),
@@ -91,6 +93,7 @@
 
 	function applySleepPreset(hours: number) {
 		const [h, m] = sleepBedTime.split(':').map(Number);
+		// eslint-disable-next-line svelte/prefer-svelte-reactivity
 		const wake = new Date(`${sleepBedDate}T${sleepBedTime}`);
 		wake.setHours(h + hours, m, 0, 0);
 		// Use local date methods (not toISOString which is UTC) to get the correct date
@@ -110,7 +113,6 @@
 </script>
 
 <!-- Backdrop click closes the sheet -->
-<!-- svelte-ignore a11y_click_events_have_key_events a11y_no_noninteractive_element_interactions -->
 <dialog
 	bind:this={dialog}
 	onclose={onClose}
@@ -375,7 +377,7 @@
 						Quick add
 					</p>
 					<div class="flex gap-2">
-						{#each SLEEP_PRESETS as hours}
+						{#each SLEEP_PRESETS as hours (hours)}
 							<button
 								type="button"
 								onclick={() => applySleepPreset(hours)}
@@ -438,7 +440,7 @@
 						Quick add
 					</p>
 					<div class="flex gap-2">
-						{#each WORK_PRESETS as hours}
+						{#each WORK_PRESETS as hours (hours)}
 							<button
 								type="button"
 								onclick={() => applyWorkPreset(hours)}
