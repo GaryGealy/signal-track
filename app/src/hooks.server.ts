@@ -1,10 +1,14 @@
 import type { Handle } from '@sveltejs/kit';
+import { dev } from '$app/environment';
 import { validateSession, SESSION_COOKIE } from '$lib/server/auth';
 import * as schema from '$lib/server/db/schema';
 
 export const handle: Handle = async ({ event, resolve }) => {
-	// Create DB instance: D1 binding on Cloudflare, better-sqlite3 locally
-	if (event.platform?.env?.DB) {
+	// In production (Cloudflare Pages) use D1 binding.
+	// In local dev always use better-sqlite3 against local.db — the platform
+	// proxy also provides a DB binding locally, but its D1 simulation hasn't
+	// had migrations applied, so we skip it in dev mode.
+	if (!dev && event.platform?.env?.DB) {
 		const { drizzle } = await import('drizzle-orm/d1');
 		event.locals.db = drizzle(event.platform.env.DB, { schema });
 	} else {
