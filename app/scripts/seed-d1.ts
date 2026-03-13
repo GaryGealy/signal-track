@@ -47,8 +47,12 @@ async function main() {
 	const statements: string[] = [];
 
 	// Remove existing test user and their data
-	statements.push(`DELETE FROM metric_entries WHERE user_id IN (SELECT id FROM users WHERE email = '${EMAIL}');`);
-	statements.push(`DELETE FROM sessions WHERE user_id IN (SELECT id FROM users WHERE email = '${EMAIL}');`);
+	statements.push(
+		`DELETE FROM metric_entries WHERE user_id IN (SELECT id FROM users WHERE email = '${EMAIL}');`
+	);
+	statements.push(
+		`DELETE FROM sessions WHERE user_id IN (SELECT id FROM users WHERE email = '${EMAIL}');`
+	);
 	statements.push(`DELETE FROM users WHERE email = '${EMAIL}';`);
 
 	// Insert user
