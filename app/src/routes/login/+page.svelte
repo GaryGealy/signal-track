@@ -49,17 +49,10 @@
 		class="w-full max-w-[390px] rounded-[20px] p-8"
 		style="background: var(--color-surface); border: 1px solid var(--color-border);"
 	>
-		<!-- Wordmark -->
-		<div class="mb-6 text-center">
-			<h1
-				class="text-[22px] font-bold tracking-[-0.02em]"
-				style="color: var(--color-text-primary);"
-			>
-				SignalTrack
-			</h1>
-			<p class="mt-1 text-[13px]" style="color: var(--color-text-muted);">
-				Your signals, your story.
-			</p>
+		<!-- Logo -->
+		<div class="mb-6 flex flex-col items-center gap-2">
+			<img src="/logo.png" alt="SignalTrack" class="h-14 w-auto" />
+			<p class="text-[13px]" style="color: var(--color-text-muted);">Your signals, your story.</p>
 		</div>
 
 		{#if mode === 'login'}
