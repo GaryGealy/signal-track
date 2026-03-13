@@ -4,6 +4,7 @@
 
 	interface Props {
 		label: string;
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		icon: Component<any> | ComponentType<any>;
 		href: string;
 		primaryValue: string;

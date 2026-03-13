@@ -30,7 +30,11 @@
 	const hour = new Date().getHours();
 	const greeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
 
-	const dateLabel = new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' });
+	const dateLabel = new Date().toLocaleDateString('en-US', {
+		weekday: 'long',
+		month: 'short',
+		day: 'numeric'
+	});
 </script>
 
 <div class="flex flex-col px-5 pb-6">

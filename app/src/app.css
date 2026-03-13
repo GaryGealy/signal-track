@@ -26,13 +26,13 @@
 		--radius: 0.5rem;
 
 		/* Design B — Warmth tokens */
-		--color-bg: #FAF7F2;
-		--color-surface: #FFFFFF;
-		--color-border: #EFE8DE;
-		--color-text-primary: #2C1A0E;
-		--color-text-muted: #9A7E6A;
-		--color-accent: #C4622D;
-		--color-accent-bg: #FDF0E8;
+		--color-bg: #faf7f2;
+		--color-surface: #ffffff;
+		--color-border: #efe8de;
+		--color-text-primary: #2c1a0e;
+		--color-text-muted: #9a7e6a;
+		--color-accent: #c4622d;
+		--color-accent-bg: #fdf0e8;
 	}
 }
 

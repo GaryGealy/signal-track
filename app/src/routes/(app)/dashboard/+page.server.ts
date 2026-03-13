@@ -1,4 +1,6 @@
-import type { PageServerLoad } from './$types';
+import { redirect } from '@sveltejs/kit';
+import { deleteSession, SESSION_COOKIE } from '$lib/server/auth';
+import type { PageServerLoad, Actions } from './$types';
 import { db } from '$lib/server/db';
 import { metricEntries } from '$lib/server/db/schema';
 import { eq, and, desc } from 'drizzle-orm';
@@ -18,6 +20,15 @@ async function loadMetricSummary(userId: string, metricType: MetricType) {
 	// Reverse so oldest→newest for sparkline rendering
 	return entries.reverse();
 }
+
+export const actions: Actions = {
+	logout: async ({ cookies }) => {
+		const token = cookies.get(SESSION_COOKIE);
+		if (token) await deleteSession(token);
+		cookies.delete(SESSION_COOKIE, { path: '/' });
+		redirect(302, '/login');
+	}
+};
 
 export const load: PageServerLoad = async ({ parent }) => {
 	const { user } = await parent();

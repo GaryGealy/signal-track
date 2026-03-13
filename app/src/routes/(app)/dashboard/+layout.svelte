@@ -14,6 +14,18 @@
 </script>
 
 <div class="flex h-dvh flex-col" style="background: var(--color-bg);">
+	<!-- Header with logout -->
+	<div
+		class="flex shrink-0 items-center justify-end px-5 py-3"
+		style="background: var(--color-bg);"
+	>
+		<form method="POST" action="/dashboard?/logout">
+			<button type="submit" class="text-[12px]" style="color: var(--color-text-muted);">
+				Log out
+			</button>
+		</form>
+	</div>
+
 	<!-- Scrollable content -->
 	<main class="min-h-0 flex-1 overflow-y-auto">
 		{@render children()}
