@@ -45,6 +45,12 @@
 		return `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
 	}
 
+	// --- Weight / BP date-time state (captured at open time, not hard-coded to render time) ---
+	let weightDate = $state(todayDate());
+	let weightTime = $state(currentTime());
+	let bpDate = $state(todayDate());
+	let bpTime = $state(currentTime());
+
 	// --- Work / Sleep reactive time state (for quick add chips + live duration) ---
 	let workDate = $state(todayDate());
 	let workStart = $state('09:00');
@@ -194,14 +200,14 @@
 						<input
 							name="date"
 							type="date"
-							value={todayDate()}
+							bind:value={weightDate}
 							class="flex-1 rounded-[10px] border px-3 py-3 text-[14px] outline-none focus:ring-2 focus:ring-[#C4622D]"
 							style="border-color: var(--color-border); background: var(--color-accent-bg); color: var(--color-text-primary);"
 						/>
 						<input
 							name="time"
 							type="time"
-							value={currentTime()}
+							bind:value={weightTime}
 							class="flex-1 rounded-[10px] border px-3 py-3 text-[14px] outline-none focus:ring-2 focus:ring-[#C4622D]"
 							style="border-color: var(--color-border); background: var(--color-accent-bg); color: var(--color-text-primary);"
 						/>
@@ -257,14 +263,14 @@
 						<input
 							name="date"
 							type="date"
-							value={todayDate()}
+							bind:value={bpDate}
 							class="flex-1 rounded-[10px] border px-3 py-3 text-[14px] outline-none focus:ring-2 focus:ring-[#C4622D]"
 							style="border-color: var(--color-border); background: var(--color-accent-bg); color: var(--color-text-primary);"
 						/>
 						<input
 							name="time"
 							type="time"
-							value={currentTime()}
+							bind:value={bpTime}
 							class="flex-1 rounded-[10px] border px-3 py-3 text-[14px] outline-none focus:ring-2 focus:ring-[#C4622D]"
 							style="border-color: var(--color-border); background: var(--color-accent-bg); color: var(--color-text-primary);"
 						/>
