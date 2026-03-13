@@ -8,7 +8,7 @@
 import Database from 'better-sqlite3';
 import bcrypt from 'bcryptjs';
 import { drizzle } from 'drizzle-orm/better-sqlite3';
-import { eq, and } from 'drizzle-orm';
+import { eq } from 'drizzle-orm';
 import { users, metricEntries } from '../src/lib/server/db/schema.js';
 
 const DATABASE_URL = process.env.DATABASE_URL ?? 'local.db';
@@ -48,7 +48,10 @@ async function main() {
 
 	// Create user
 	const passwordHash = await bcrypt.hash(PASSWORD, 12);
-	const [user] = await db.insert(users).values({ email: EMAIL, name: NAME, passwordHash }).returning();
+	const [user] = await db
+		.insert(users)
+		.values({ email: EMAIL, name: NAME, passwordHash })
+		.returning();
 	if (!user) throw new Error('Failed to create user');
 	console.log(`Created user: ${user.name} <${user.email}> (id: ${user.id})`);
 
@@ -104,4 +107,6 @@ async function main() {
 	console.log(`  Password: ${PASSWORD}`);
 }
 
-main().catch(console.error).finally(() => sqlite.close());
+main()
+	.catch(console.error)
+	.finally(() => sqlite.close());
