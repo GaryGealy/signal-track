@@ -26,19 +26,18 @@
 	// Only show errors if they belong to the currently open metric form.
 	// Guard against the success shape { success: true } which has no errors.
 	const errors = $derived<Record<string, string[]>>(
-		actionForm?.metricType === metric && !actionForm?.success
-			? (actionForm?.errors ?? {})
-			: {}
+		actionForm?.metricType === metric && !actionForm?.success ? (actionForm?.errors ?? {}) : {}
 	);
 
 	// --- Default values ---
 	function todayDate() {
-		return new Date().toISOString().split('T')[0];
+		const d = new Date();
+		return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 	}
 	function yesterdayDate() {
 		const d = new Date();
 		d.setDate(d.getDate() - 1);
-		return d.toISOString().split('T')[0];
+		return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 	}
 	function currentTime() {
 		const now = new Date();
@@ -146,10 +145,16 @@
 			<!-- Header -->
 			<div class="flex items-center justify-between">
 				<div>
-					<p class="text-[11px] font-semibold uppercase tracking-[0.08em]" style="color: var(--color-text-muted);">
+					<p
+						class="text-[11px] font-semibold uppercase tracking-[0.08em]"
+						style="color: var(--color-text-muted);"
+					>
 						Log entry
 					</p>
-					<h2 class="text-[22px] font-bold tracking-[-0.02em]" style="color: var(--color-text-primary);">
+					<h2
+						class="text-[22px] font-bold tracking-[-0.02em]"
+						style="color: var(--color-text-primary);"
+					>
 						{titles[metric]}
 					</h2>
 				</div>
@@ -170,7 +175,11 @@
 			<!-- ===== WEIGHT FORM ===== -->
 			{#if metric === 'weight'}
 				<div class="flex flex-col gap-1.5">
-					<label for="weight-value" class="text-[13px] font-medium" style="color: var(--color-text-primary);">
+					<label
+						for="weight-value"
+						class="text-[13px] font-medium"
+						style="color: var(--color-text-primary);"
+					>
 						Weight
 					</label>
 					<div class="relative">
@@ -182,20 +191,29 @@
 							min="0"
 							placeholder="0.0"
 							class="w-full rounded-[10px] border px-4 py-3 text-[28px] font-bold outline-none focus:ring-2 focus:ring-[#C4622D]"
-							style="border-color: {errors.value ? '#EF4444' : 'var(--color-border)'}; background: var(--color-accent-bg); color: var(--color-text-primary);"
+							style="border-color: {errors.value
+								? '#EF4444'
+								: 'var(--color-border)'}; background: var(--color-accent-bg); color: var(--color-text-primary);"
 						/>
-						<span class="absolute right-4 top-1/2 -translate-y-1/2 text-[15px]" style="color: var(--color-text-muted);">
+						<span
+							class="absolute right-4 top-1/2 -translate-y-1/2 text-[15px]"
+							style="color: var(--color-text-muted);"
+						>
 							lbs
 						</span>
 					</div>
 					{#if errors.value}
 						<p class="text-[12px]" style="color: #EF4444;">{errors.value[0]}</p>
 					{/if}
-					<p class="text-[12px]" style="color: var(--color-text-muted);">Enter your weight in pounds</p>
+					<p class="text-[12px]" style="color: var(--color-text-muted);">
+						Enter your weight in pounds
+					</p>
 				</div>
 
 				<div class="flex flex-col gap-1.5">
-					<label class="text-[13px] font-medium" style="color: var(--color-text-primary);">Date & time</label>
+					<p class="text-[13px] font-medium" style="color: var(--color-text-primary);">
+						Date & time
+					</p>
 					<div class="flex gap-2">
 						<input
 							name="date"
@@ -214,12 +232,16 @@
 					</div>
 				</div>
 
-			<!-- ===== BLOOD PRESSURE FORM ===== -->
+				<!-- ===== BLOOD PRESSURE FORM ===== -->
 			{:else if metric === 'blood_pressure'}
 				<div class="flex flex-col gap-1.5">
 					<div class="flex items-end gap-2">
 						<div class="flex flex-1 flex-col gap-1.5">
-							<label for="bp-systolic" class="text-[13px] font-medium" style="color: var(--color-text-primary);">
+							<label
+								for="bp-systolic"
+								class="text-[13px] font-medium"
+								style="color: var(--color-text-primary);"
+							>
 								Systolic
 							</label>
 							<input
@@ -229,15 +251,23 @@
 								min="0"
 								placeholder="120"
 								class="w-full rounded-[10px] border px-4 py-3 text-[28px] font-bold outline-none focus:ring-2 focus:ring-[#C4622D]"
-								style="border-color: {errors.systolic ? '#EF4444' : 'var(--color-border)'}; background: var(--color-accent-bg); color: var(--color-text-primary);"
+								style="border-color: {errors.systolic
+									? '#EF4444'
+									: 'var(--color-border)'}; background: var(--color-accent-bg); color: var(--color-text-primary);"
 							/>
 							{#if errors.systolic}
 								<p class="text-[12px]" style="color: #EF4444;">{errors.systolic[0]}</p>
 							{/if}
 						</div>
-						<span class="mb-3 text-[24px] font-light" style="color: var(--color-text-muted);">/</span>
+						<span class="mb-3 text-[24px] font-light" style="color: var(--color-text-muted);"
+							>/</span
+						>
 						<div class="flex flex-1 flex-col gap-1.5">
-							<label for="bp-diastolic" class="text-[13px] font-medium" style="color: var(--color-text-primary);">
+							<label
+								for="bp-diastolic"
+								class="text-[13px] font-medium"
+								style="color: var(--color-text-primary);"
+							>
 								Diastolic
 							</label>
 							<input
@@ -247,7 +277,9 @@
 								min="0"
 								placeholder="80"
 								class="w-full rounded-[10px] border px-4 py-3 text-[28px] font-bold outline-none focus:ring-2 focus:ring-[#C4622D]"
-								style="border-color: {errors.diastolic ? '#EF4444' : 'var(--color-border)'}; background: var(--color-accent-bg); color: var(--color-text-primary);"
+								style="border-color: {errors.diastolic
+									? '#EF4444'
+									: 'var(--color-border)'}; background: var(--color-accent-bg); color: var(--color-text-primary);"
 							/>
 							{#if errors.diastolic}
 								<p class="text-[12px]" style="color: #EF4444;">{errors.diastolic[0]}</p>
@@ -258,7 +290,9 @@
 				</div>
 
 				<div class="flex flex-col gap-1.5">
-					<label class="text-[13px] font-medium" style="color: var(--color-text-primary);">Date & time</label>
+					<p class="text-[13px] font-medium" style="color: var(--color-text-primary);">
+						Date & time
+					</p>
 					<div class="flex gap-2">
 						<input
 							name="date"
@@ -277,11 +311,13 @@
 					</div>
 				</div>
 
-			<!-- ===== SLEEP FORM ===== -->
+				<!-- ===== SLEEP FORM ===== -->
 			{:else if metric === 'sleep'}
 				<div class="flex flex-col gap-1.5">
 					<div class="flex items-center justify-between">
-						<label class="text-[13px] font-medium" style="color: var(--color-text-primary);">Duration</label>
+						<p class="text-[13px] font-medium" style="color: var(--color-text-primary);">
+							Duration
+						</p>
 						{#if sleepDuration !== '—'}
 							<span class="text-[13px]" style="color: var(--color-accent);">{sleepDuration}</span>
 						{/if}
@@ -311,14 +347,18 @@
 								type="date"
 								bind:value={sleepWakeDate}
 								class="rounded-[10px] border px-3 py-2.5 text-[13px] outline-none focus:ring-2 focus:ring-[#C4622D]"
-								style="border-color: {errors.wakeTime ? '#EF4444' : 'var(--color-border)'}; background: var(--color-accent-bg); color: var(--color-text-primary);"
+								style="border-color: {errors.wakeTime
+									? '#EF4444'
+									: 'var(--color-border)'}; background: var(--color-accent-bg); color: var(--color-text-primary);"
 							/>
 							<input
 								name="wakeTime"
 								type="time"
 								bind:value={sleepWakeTime}
 								class="rounded-[10px] border px-3 py-2.5 text-[13px] outline-none focus:ring-2 focus:ring-[#C4622D]"
-								style="border-color: {errors.wakeTime ? '#EF4444' : 'var(--color-border)'}; background: var(--color-accent-bg); color: var(--color-text-primary);"
+								style="border-color: {errors.wakeTime
+									? '#EF4444'
+									: 'var(--color-border)'}; background: var(--color-accent-bg); color: var(--color-text-primary);"
 							/>
 						</div>
 					</div>
@@ -328,7 +368,10 @@
 				</div>
 
 				<div class="flex flex-col gap-2">
-					<p class="text-[11px] font-semibold uppercase tracking-[0.06em]" style="color: var(--color-text-muted);">
+					<p
+						class="text-[11px] font-semibold uppercase tracking-[0.06em]"
+						style="color: var(--color-text-muted);"
+					>
 						Quick add
 					</p>
 					<div class="flex gap-2">
@@ -345,11 +388,13 @@
 					</div>
 				</div>
 
-			<!-- ===== WORK FORM ===== -->
+				<!-- ===== WORK FORM ===== -->
 			{:else if metric === 'work'}
 				<div class="flex flex-col gap-1.5">
 					<div class="flex items-center justify-between">
-						<label class="text-[13px] font-medium" style="color: var(--color-text-primary);">Duration</label>
+						<p class="text-[13px] font-medium" style="color: var(--color-text-primary);">
+							Duration
+						</p>
 						{#if workDuration !== '—'}
 							<span class="text-[13px]" style="color: var(--color-accent);">{workDuration}</span>
 						{/if}
@@ -375,7 +420,9 @@
 							type="time"
 							bind:value={workEnd}
 							class="flex-1 rounded-[10px] border px-3 py-2.5 text-[14px] outline-none focus:ring-2 focus:ring-[#C4622D]"
-							style="border-color: {errors.endTime ? '#EF4444' : 'var(--color-border)'}; background: var(--color-accent-bg); color: var(--color-text-primary);"
+							style="border-color: {errors.endTime
+								? '#EF4444'
+								: 'var(--color-border)'}; background: var(--color-accent-bg); color: var(--color-text-primary);"
 						/>
 					</div>
 					{#if errors.endTime}
@@ -384,7 +431,10 @@
 				</div>
 
 				<div class="flex flex-col gap-2">
-					<p class="text-[11px] font-semibold uppercase tracking-[0.06em]" style="color: var(--color-text-muted);">
+					<p
+						class="text-[11px] font-semibold uppercase tracking-[0.06em]"
+						style="color: var(--color-text-muted);"
+					>
 						Quick add
 					</p>
 					<div class="flex gap-2">

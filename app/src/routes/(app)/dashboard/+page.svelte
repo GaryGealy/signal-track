@@ -109,8 +109,4 @@
 	</div>
 </div>
 
-<AddEntrySheet
-	metric={openMetric}
-	actionForm={form}
-	onClose={() => (openMetric = null)}
-/>
+<AddEntrySheet metric={openMetric} actionForm={form} onClose={() => (openMetric = null)} />

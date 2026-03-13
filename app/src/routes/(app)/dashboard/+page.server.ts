@@ -5,12 +5,7 @@ import { db } from '$lib/server/db';
 import { metricEntries } from '$lib/server/db/schema';
 import { eq, and, desc } from 'drizzle-orm';
 import type { MetricType, NewMetricEntry } from '$lib/server/db/schema';
-import {
-  weightSchema,
-  bloodPressureSchema,
-  sleepSchema,
-  workSchema
-} from '$lib/schemas/metrics';
+import { weightSchema, bloodPressureSchema, sleepSchema, workSchema } from '$lib/schemas/metrics';
 
 const METRIC_TYPES: MetricType[] = ['weight', 'blood_pressure', 'sleep', 'work'];
 const SPARKLINE_LIMIT = 14;
@@ -101,9 +96,7 @@ export const actions: Actions = {
 			}
 			const bedDatetime = new Date(`${result.data.bedDate}T${result.data.bedTime}`);
 			const wakeDatetime = new Date(`${result.data.wakeDate}T${result.data.wakeTime}`);
-			const valueDuration = Math.round(
-				(wakeDatetime.getTime() - bedDatetime.getTime()) / 60000
-			);
+			const valueDuration = Math.round((wakeDatetime.getTime() - bedDatetime.getTime()) / 60000);
 			await db.insert(metricEntries).values({
 				userId,
 				metricType: 'sleep',
@@ -125,9 +118,7 @@ export const actions: Actions = {
 			}
 			const startDatetime = new Date(`${result.data.workDate}T${result.data.startTime}`);
 			const endDatetime = new Date(`${result.data.workDate}T${result.data.endTime}`);
-			const valueDuration = Math.round(
-				(endDatetime.getTime() - startDatetime.getTime()) / 60000
-			);
+			const valueDuration = Math.round((endDatetime.getTime() - startDatetime.getTime()) / 60000);
 			await db.insert(metricEntries).values({
 				userId,
 				metricType: 'work',
