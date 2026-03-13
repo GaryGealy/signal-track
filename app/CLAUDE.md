@@ -4,6 +4,18 @@
 - **Package Manager**: npm
 - **Add-ons**: prettier, eslint, playwright, drizzle, mcp
 
+## Patterns & Gotchas
+
+- **SvelteKit redirect**: Use `return redirect(302, '/path')` — `redirect()` throws (typed `never`), but `return` makes control flow explicit
+- **Drizzle inserts**: Use `satisfies NewEntity` (not `as NewEntity`) for type-safe insert objects
+- **`{#each}` blocks**: Always add a key — `{#each items as item (item)}` — ESLint rule `svelte/require-each-key` enforces this
+- **`new Date()` in Svelte scripts**: Add `// eslint-disable-next-line svelte/prefer-svelte-reactivity` before `new Date()` in pure helper functions
+- **Local dates**: Use `d.getFullYear()`/`d.getMonth()+1`/`d.getDate()` for date strings — `toISOString()` returns UTC and can be off by one day
+- **`<dialog>` close**: Wire all close triggers through `dialog.close()` not `onClose()` directly; the native `onclose` event handles propagation
+- **`use:enhance`**: On success: `await update(); onClose()`. On failure: `await update({ reset: false })` to preserve form values
+- **e2e helpers**: Shared auth/navigation helpers go in `app/e2e/helpers.ts`
+- **Zod v4 + coerce**: `z.coerce.number({ invalid_type_error: '...' })` — `invalid_type_error` is a no-op in the coerce path; use `.refine()` for custom messages
+
 ---
 
 You are able to use the Svelte MCP server, where you have access to comprehensive Svelte 5 and SvelteKit documentation. Here's how to use the available tools effectively:
