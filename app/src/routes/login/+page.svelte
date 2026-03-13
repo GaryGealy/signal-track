@@ -49,17 +49,10 @@
 		class="w-full max-w-[390px] rounded-[20px] p-8"
 		style="background: var(--color-surface); border: 1px solid var(--color-border);"
 	>
-		<!-- Wordmark -->
-		<div class="mb-6 text-center">
-			<h1
-				class="text-[22px] font-bold tracking-[-0.02em]"
-				style="color: var(--color-text-primary);"
-			>
-				SignalTrack
-			</h1>
-			<p class="mt-1 text-[13px]" style="color: var(--color-text-muted);">
-				Your signals, your story.
-			</p>
+		<!-- Logo -->
+		<div class="mb-6 flex flex-col items-center gap-2">
+			<img src="/logo.png" alt="SignalTrack" class="h-14 w-auto" />
+			<p class="text-[13px]" style="color: var(--color-text-muted);">Your signals, your story.</p>
 		</div>
 
 		{#if mode === 'login'}
@@ -84,7 +77,7 @@
 						type="email"
 						autocomplete="email"
 						bind:value={$loginForm.email}
-						class="rounded-[10px] border px-4 py-3 text-[15px] outline-none focus:ring-2 focus:ring-[#C4622D]"
+						class="rounded-[10px] border px-4 py-3 text-[15px] outline-none focus:ring-2 focus:ring-[#1e9e94]"
 						style="border-color: {$loginErrors.email
 							? '#EF4444'
 							: 'var(--color-border)'}; color: var(--color-text-primary); background: var(--color-surface);"
@@ -108,7 +101,7 @@
 						type="password"
 						autocomplete="current-password"
 						bind:value={$loginForm.password}
-						class="rounded-[10px] border px-4 py-3 text-[15px] outline-none focus:ring-2 focus:ring-[#C4622D]"
+						class="rounded-[10px] border px-4 py-3 text-[15px] outline-none focus:ring-2 focus:ring-[#1e9e94]"
 						style="border-color: {$loginErrors.password
 							? '#EF4444'
 							: 'var(--color-border)'}; color: var(--color-text-primary); background: var(--color-surface);"
@@ -160,7 +153,7 @@
 						type="text"
 						autocomplete="name"
 						bind:value={$registerForm.name}
-						class="rounded-[10px] border px-4 py-3 text-[15px] outline-none focus:ring-2 focus:ring-[#C4622D]"
+						class="rounded-[10px] border px-4 py-3 text-[15px] outline-none focus:ring-2 focus:ring-[#1e9e94]"
 						style="border-color: {$registerErrors.name
 							? '#EF4444'
 							: 'var(--color-border)'}; color: var(--color-text-primary); background: var(--color-surface);"
@@ -184,7 +177,7 @@
 						type="email"
 						autocomplete="email"
 						bind:value={$registerForm.email}
-						class="rounded-[10px] border px-4 py-3 text-[15px] outline-none focus:ring-2 focus:ring-[#C4622D]"
+						class="rounded-[10px] border px-4 py-3 text-[15px] outline-none focus:ring-2 focus:ring-[#1e9e94]"
 						style="border-color: {$registerErrors.email
 							? '#EF4444'
 							: 'var(--color-border)'}; color: var(--color-text-primary); background: var(--color-surface);"
@@ -208,7 +201,7 @@
 						type="password"
 						autocomplete="new-password"
 						bind:value={$registerForm.password}
-						class="rounded-[10px] border px-4 py-3 text-[15px] outline-none focus:ring-2 focus:ring-[#C4622D]"
+						class="rounded-[10px] border px-4 py-3 text-[15px] outline-none focus:ring-2 focus:ring-[#1e9e94]"
 						style="border-color: {$registerErrors.password
 							? '#EF4444'
 							: 'var(--color-border)'}; color: var(--color-text-primary); background: var(--color-surface);"

@@ -192,7 +192,7 @@
 							step="0.1"
 							min="0"
 							placeholder="0.0"
-							class="w-full rounded-[10px] border px-4 py-3 text-[28px] font-bold outline-none focus:ring-2 focus:ring-[#C4622D]"
+							class="w-full rounded-[10px] border px-4 py-3 text-[28px] font-bold outline-none focus:ring-2 focus:ring-[#1e9e94]"
 							style="border-color: {errors.value
 								? '#EF4444'
 								: 'var(--color-border)'}; background: var(--color-accent-bg); color: var(--color-text-primary);"
@@ -221,14 +221,14 @@
 							name="date"
 							type="date"
 							bind:value={weightDate}
-							class="flex-1 rounded-[10px] border px-3 py-3 text-[14px] outline-none focus:ring-2 focus:ring-[#C4622D]"
+							class="flex-1 rounded-[10px] border px-3 py-3 text-[14px] outline-none focus:ring-2 focus:ring-[#1e9e94]"
 							style="border-color: var(--color-border); background: var(--color-accent-bg); color: var(--color-text-primary);"
 						/>
 						<input
 							name="time"
 							type="time"
 							bind:value={weightTime}
-							class="flex-1 rounded-[10px] border px-3 py-3 text-[14px] outline-none focus:ring-2 focus:ring-[#C4622D]"
+							class="flex-1 rounded-[10px] border px-3 py-3 text-[14px] outline-none focus:ring-2 focus:ring-[#1e9e94]"
 							style="border-color: var(--color-border); background: var(--color-accent-bg); color: var(--color-text-primary);"
 						/>
 					</div>
@@ -252,7 +252,7 @@
 								type="number"
 								min="0"
 								placeholder="120"
-								class="w-full rounded-[10px] border px-4 py-3 text-[28px] font-bold outline-none focus:ring-2 focus:ring-[#C4622D]"
+								class="w-full rounded-[10px] border px-4 py-3 text-[28px] font-bold outline-none focus:ring-2 focus:ring-[#1e9e94]"
 								style="border-color: {errors.systolic
 									? '#EF4444'
 									: 'var(--color-border)'}; background: var(--color-accent-bg); color: var(--color-text-primary);"
@@ -278,7 +278,7 @@
 								type="number"
 								min="0"
 								placeholder="80"
-								class="w-full rounded-[10px] border px-4 py-3 text-[28px] font-bold outline-none focus:ring-2 focus:ring-[#C4622D]"
+								class="w-full rounded-[10px] border px-4 py-3 text-[28px] font-bold outline-none focus:ring-2 focus:ring-[#1e9e94]"
 								style="border-color: {errors.diastolic
 									? '#EF4444'
 									: 'var(--color-border)'}; background: var(--color-accent-bg); color: var(--color-text-primary);"
@@ -300,14 +300,14 @@
 							name="date"
 							type="date"
 							bind:value={bpDate}
-							class="flex-1 rounded-[10px] border px-3 py-3 text-[14px] outline-none focus:ring-2 focus:ring-[#C4622D]"
+							class="flex-1 rounded-[10px] border px-3 py-3 text-[14px] outline-none focus:ring-2 focus:ring-[#1e9e94]"
 							style="border-color: var(--color-border); background: var(--color-accent-bg); color: var(--color-text-primary);"
 						/>
 						<input
 							name="time"
 							type="time"
 							bind:value={bpTime}
-							class="flex-1 rounded-[10px] border px-3 py-3 text-[14px] outline-none focus:ring-2 focus:ring-[#C4622D]"
+							class="flex-1 rounded-[10px] border px-3 py-3 text-[14px] outline-none focus:ring-2 focus:ring-[#1e9e94]"
 							style="border-color: var(--color-border); background: var(--color-accent-bg); color: var(--color-text-primary);"
 						/>
 					</div>
@@ -331,14 +331,14 @@
 								name="bedDate"
 								type="date"
 								bind:value={sleepBedDate}
-								class="rounded-[10px] border px-3 py-2.5 text-[13px] outline-none focus:ring-2 focus:ring-[#C4622D]"
+								class="rounded-[10px] border px-3 py-2.5 text-[13px] outline-none focus:ring-2 focus:ring-[#1e9e94]"
 								style="border-color: var(--color-border); background: var(--color-accent-bg); color: var(--color-text-primary);"
 							/>
 							<input
 								name="bedTime"
 								type="time"
 								bind:value={sleepBedTime}
-								class="rounded-[10px] border px-3 py-2.5 text-[13px] outline-none focus:ring-2 focus:ring-[#C4622D]"
+								class="rounded-[10px] border px-3 py-2.5 text-[13px] outline-none focus:ring-2 focus:ring-[#1e9e94]"
 								style="border-color: var(--color-border); background: var(--color-accent-bg); color: var(--color-text-primary);"
 							/>
 						</div>
@@ -348,7 +348,7 @@
 								name="wakeDate"
 								type="date"
 								bind:value={sleepWakeDate}
-								class="rounded-[10px] border px-3 py-2.5 text-[13px] outline-none focus:ring-2 focus:ring-[#C4622D]"
+								class="rounded-[10px] border px-3 py-2.5 text-[13px] outline-none focus:ring-2 focus:ring-[#1e9e94]"
 								style="border-color: {errors.wakeTime
 									? '#EF4444'
 									: 'var(--color-border)'}; background: var(--color-accent-bg); color: var(--color-text-primary);"
@@ -357,7 +357,7 @@
 								name="wakeTime"
 								type="time"
 								bind:value={sleepWakeTime}
-								class="rounded-[10px] border px-3 py-2.5 text-[13px] outline-none focus:ring-2 focus:ring-[#C4622D]"
+								class="rounded-[10px] border px-3 py-2.5 text-[13px] outline-none focus:ring-2 focus:ring-[#1e9e94]"
 								style="border-color: {errors.wakeTime
 									? '#EF4444'
 									: 'var(--color-border)'}; background: var(--color-accent-bg); color: var(--color-text-primary);"
@@ -405,7 +405,7 @@
 						name="workDate"
 						type="date"
 						bind:value={workDate}
-						class="rounded-[10px] border px-3 py-2.5 text-[14px] outline-none focus:ring-2 focus:ring-[#C4622D]"
+						class="rounded-[10px] border px-3 py-2.5 text-[14px] outline-none focus:ring-2 focus:ring-[#1e9e94]"
 						style="border-color: var(--color-border); background: var(--color-accent-bg); color: var(--color-text-primary);"
 					/>
 					<div class="flex items-center gap-2">
@@ -413,7 +413,7 @@
 							name="startTime"
 							type="time"
 							bind:value={workStart}
-							class="flex-1 rounded-[10px] border px-3 py-2.5 text-[14px] outline-none focus:ring-2 focus:ring-[#C4622D]"
+							class="flex-1 rounded-[10px] border px-3 py-2.5 text-[14px] outline-none focus:ring-2 focus:ring-[#1e9e94]"
 							style="border-color: var(--color-border); background: var(--color-accent-bg); color: var(--color-text-primary);"
 						/>
 						<span style="color: var(--color-text-muted);">→</span>
@@ -421,7 +421,7 @@
 							name="endTime"
 							type="time"
 							bind:value={workEnd}
-							class="flex-1 rounded-[10px] border px-3 py-2.5 text-[14px] outline-none focus:ring-2 focus:ring-[#C4622D]"
+							class="flex-1 rounded-[10px] border px-3 py-2.5 text-[14px] outline-none focus:ring-2 focus:ring-[#1e9e94]"
 							style="border-color: {errors.endTime
 								? '#EF4444'
 								: 'var(--color-border)'}; background: var(--color-accent-bg); color: var(--color-text-primary);"

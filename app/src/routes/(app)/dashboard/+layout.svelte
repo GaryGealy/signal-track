@@ -14,11 +14,12 @@
 </script>
 
 <div class="flex h-dvh flex-col" style="background: var(--color-bg);">
-	<!-- Header with logout -->
+	<!-- Header with logo + logout -->
 	<div
-		class="flex shrink-0 items-center justify-end px-5 py-3"
+		class="flex shrink-0 items-center justify-between px-5 py-3"
 		style="background: var(--color-bg);"
 	>
+		<img src="/logo.png" alt="SignalTrack" class="h-8 w-auto" />
 		<form method="POST" action="/dashboard?/logout">
 			<button type="submit" class="text-[12px]" style="color: var(--color-text-muted);">
 				Log out
