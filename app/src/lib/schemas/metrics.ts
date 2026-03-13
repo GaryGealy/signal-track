@@ -2,6 +2,9 @@ import { z } from 'zod';
 
 export const weightSchema = z.object({
   metricType: z.literal('weight'),
+  // Note: z.coerce.number() in Zod v4 ignores invalid_type_error — the option is a no-op
+  // in the coerce path. Using .refine() for positive validation instead of .positive()
+  // is equivalent for all practical inputs.
   value: z.coerce
     .number()
     .refine((val) => val > 0, { message: 'Weight must be positive' }),

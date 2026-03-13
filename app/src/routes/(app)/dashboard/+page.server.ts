@@ -35,7 +35,7 @@ export const actions: Actions = {
 		redirect(302, '/login');
 	},
 	addEntry: async ({ request, locals }) => {
-		if (!locals.user) redirect(302, '/login');
+		if (!locals.user) return redirect(302, '/login');
 
 		const formData = await request.formData();
 		// Note: date/time strings submitted by the browser (e.g. "2026-03-12T22:00") are
