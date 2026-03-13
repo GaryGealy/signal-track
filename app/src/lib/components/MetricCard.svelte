@@ -6,7 +6,7 @@
 		label: string;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		icon: Component<any> | ComponentType<any>;
-		href: string;
+		onAdd: () => void;
 		primaryValue: string;
 		primaryUnit?: string;
 		secondaryValue?: string;
@@ -18,7 +18,7 @@
 	let {
 		label,
 		icon: Icon,
-		href,
+		onAdd,
 		primaryValue,
 		primaryUnit,
 		secondaryValue,
@@ -48,14 +48,15 @@
 		</div>
 
 		<!-- Add button -->
-		<a
-			{href}
+		<button
+			type="button"
+			onclick={onAdd}
 			class="rounded-[20px] px-[14px] py-[5px] text-[12px] font-semibold text-white"
 			style="background: var(--color-accent);"
 			aria-label="Add {label} entry"
 		>
 			+ Add
-		</a>
+		</button>
 	</div>
 
 	<!-- Value + sparkline row -->

@@ -13,3 +13,8 @@
 
 - **Pre-PR checks**: Run type checks, lint, and tests before creating PRs
 - **Reproducible installs**: Use `npm ci` instead of `npm install` to match CI environment
+
+## Worktrees
+
+- **New worktree setup**: Copy `.env` from `app/` then run `cd app && npm run db:push -- --force` to initialize SQLite schema
+- **Skip e2e tests in worktrees**: Only run `npm run check` and `npm run lint`; e2e tests require a running dev server + fresh DB
