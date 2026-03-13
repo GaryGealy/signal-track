@@ -2,10 +2,13 @@
 	import { superForm } from 'sveltekit-superforms';
 	import { zod4Client } from 'sveltekit-superforms/adapters';
 	import { z } from 'zod';
+	import { Eye, EyeOff } from 'lucide-svelte';
 
 	let { data } = $props();
 
 	let mode = $state<'login' | 'register'>('login');
+	let showLoginPassword = $state(false);
+	let showRegisterPassword = $state(false);
 
 	const loginSchema = z.object({
 		email: z.string().email(),
@@ -95,17 +98,32 @@
 					>
 						Password
 					</label>
-					<input
-						id="login-password"
-						name="password"
-						type="password"
-						autocomplete="current-password"
-						bind:value={$loginForm.password}
-						class="rounded-[10px] border px-4 py-3 text-[15px] outline-none focus:ring-2 focus:ring-[#1e9e94]"
-						style="border-color: {$loginErrors.password
-							? '#EF4444'
-							: 'var(--color-border)'}; color: var(--color-text-primary); background: var(--color-surface);"
-					/>
+					<div class="relative">
+						<input
+							id="login-password"
+							name="password"
+							type={showLoginPassword ? 'text' : 'password'}
+							autocomplete="current-password"
+							bind:value={$loginForm.password}
+							class="w-full rounded-[10px] border px-4 py-3 pr-11 text-[15px] outline-none focus:ring-2 focus:ring-[#1e9e94]"
+							style="border-color: {$loginErrors.password
+								? '#EF4444'
+								: 'var(--color-border)'}; color: var(--color-text-primary); background: var(--color-surface);"
+						/>
+						<button
+							type="button"
+							onclick={() => (showLoginPassword = !showLoginPassword)}
+							class="absolute right-3 top-1/2 -translate-y-1/2"
+							aria-label={showLoginPassword ? 'Hide password' : 'Show password'}
+							style="color: var(--color-text-muted);"
+						>
+							{#if showLoginPassword}
+								<EyeOff size={18} />
+							{:else}
+								<Eye size={18} />
+							{/if}
+						</button>
+					</div>
 					{#if $loginErrors.password}
 						<p class="text-[12px]" style="color: #EF4444;">{$loginErrors.password}</p>
 					{/if}
@@ -195,17 +213,32 @@
 					>
 						Password
 					</label>
-					<input
-						id="reg-password"
-						name="password"
-						type="password"
-						autocomplete="new-password"
-						bind:value={$registerForm.password}
-						class="rounded-[10px] border px-4 py-3 text-[15px] outline-none focus:ring-2 focus:ring-[#1e9e94]"
-						style="border-color: {$registerErrors.password
-							? '#EF4444'
-							: 'var(--color-border)'}; color: var(--color-text-primary); background: var(--color-surface);"
-					/>
+					<div class="relative">
+						<input
+							id="reg-password"
+							name="password"
+							type={showRegisterPassword ? 'text' : 'password'}
+							autocomplete="new-password"
+							bind:value={$registerForm.password}
+							class="w-full rounded-[10px] border px-4 py-3 pr-11 text-[15px] outline-none focus:ring-2 focus:ring-[#1e9e94]"
+							style="border-color: {$registerErrors.password
+								? '#EF4444'
+								: 'var(--color-border)'}; color: var(--color-text-primary); background: var(--color-surface);"
+						/>
+						<button
+							type="button"
+							onclick={() => (showRegisterPassword = !showRegisterPassword)}
+							class="absolute right-3 top-1/2 -translate-y-1/2"
+							aria-label={showRegisterPassword ? 'Hide password' : 'Show password'}
+							style="color: var(--color-text-muted);"
+						>
+							{#if showRegisterPassword}
+								<EyeOff size={18} />
+							{:else}
+								<Eye size={18} />
+							{/if}
+						</button>
+					</div>
 					{#if $registerErrors.password}
 						<p class="text-[12px]" style="color: #EF4444;">{$registerErrors.password}</p>
 					{/if}
