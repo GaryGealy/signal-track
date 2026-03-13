@@ -1,8 +1,12 @@
 <script lang="ts">
 	import { User, Droplets, Moon, Briefcase } from 'lucide-svelte';
 	import MetricCard from '$lib/components/MetricCard.svelte';
+	import AddEntrySheet from '$lib/components/AddEntrySheet.svelte';
+	import type { MetricType } from '$lib/server/db/schema';
 
-	let { data } = $props();
+	let { data, form } = $props();
+
+	let openMetric = $state<MetricType | null>(null);
 
 	// Format duration (minutes) as "7h 22m"
 	function formatDuration(minutes: number | undefined | null): { hours: string; mins: string } {
@@ -61,7 +65,7 @@
 		<MetricCard
 			label="Weight"
 			icon={User}
-			href="/dashboard/weight"
+			onAdd={() => (openMetric = 'weight')}
 			primaryValue={latestWeight?.valueNumeric?.toFixed(1) ?? '—'}
 			primaryUnit="lbs"
 			sparklineValues={weightSparkline}
@@ -71,7 +75,7 @@
 		<MetricCard
 			label="Blood Pressure"
 			icon={Droplets}
-			href="/dashboard/blood-pressure"
+			onAdd={() => (openMetric = 'blood_pressure')}
 			primaryValue={latestBP?.valueNumeric?.toFixed(0) ?? '—'}
 			secondaryValue={latestBP ? `/${latestBP.valueSecondary?.toFixed(0)}` : ''}
 			secondaryUnit="mmHg"
@@ -83,7 +87,7 @@
 		<MetricCard
 			label="Sleep"
 			icon={Moon}
-			href="/dashboard/sleep"
+			onAdd={() => (openMetric = 'sleep')}
 			primaryValue={sleepFormatted.hours}
 			primaryUnit="h"
 			secondaryValue={sleepFormatted.mins}
@@ -95,7 +99,7 @@
 		<MetricCard
 			label="Work"
 			icon={Briefcase}
-			href="/dashboard/work"
+			onAdd={() => (openMetric = 'work')}
 			primaryValue={workFormatted.hours}
 			primaryUnit="h"
 			secondaryValue={workFormatted.mins}
@@ -104,3 +108,9 @@
 		/>
 	</div>
 </div>
+
+<AddEntrySheet
+	metric={openMetric}
+	actionForm={form}
+	onClose={() => (openMetric = null)}
+/>

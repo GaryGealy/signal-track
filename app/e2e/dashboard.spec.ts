@@ -26,10 +26,10 @@ test('dashboard shows page title', async ({ page }) => {
 
 test('dashboard shows all 4 metric cards', async ({ page }) => {
 	await loginAndGoToDashboard(page);
-	await expect(page.getByRole('link', { name: 'Add Weight entry' })).toBeVisible();
-	await expect(page.getByRole('link', { name: 'Add Blood Pressure entry' })).toBeVisible();
-	await expect(page.getByRole('link', { name: 'Add Sleep entry' })).toBeVisible();
-	await expect(page.getByRole('link', { name: 'Add Work entry' })).toBeVisible();
+	await expect(page.getByRole('button', { name: 'Add Weight entry' })).toBeVisible();
+	await expect(page.getByRole('button', { name: 'Add Blood Pressure entry' })).toBeVisible();
+	await expect(page.getByRole('button', { name: 'Add Sleep entry' })).toBeVisible();
+	await expect(page.getByRole('button', { name: 'Add Work entry' })).toBeVisible();
 });
 
 test('dashboard shows bottom tab bar', async ({ page }) => {
