@@ -1,16 +1,19 @@
 import { redirect, fail } from '@sveltejs/kit';
 import { deleteSession, SESSION_COOKIE } from '$lib/server/auth';
 import type { PageServerLoad, Actions } from './$types';
-import { db } from '$lib/server/db';
 import { metricEntries } from '$lib/server/db/schema';
 import { eq, and, desc } from 'drizzle-orm';
-import type { MetricType, NewMetricEntry } from '$lib/server/db/schema';
+import type { MetricType, MetricEntry, NewMetricEntry } from '$lib/server/db/schema';
 import { weightSchema, bloodPressureSchema, sleepSchema, workSchema } from '$lib/schemas/metrics';
 
 const METRIC_TYPES: MetricType[] = ['weight', 'blood_pressure', 'sleep', 'work'];
 const SPARKLINE_LIMIT = 14;
 
-async function loadMetricSummary(userId: string, metricType: MetricType) {
+async function loadMetricSummary(
+	db: any, // eslint-disable-line @typescript-eslint/no-explicit-any
+	userId: string,
+	metricType: MetricType
+): Promise<MetricEntry[]> {
 	const entries = await db
 		.select()
 		.from(metricEntries)
@@ -23,9 +26,9 @@ async function loadMetricSummary(userId: string, metricType: MetricType) {
 }
 
 export const actions: Actions = {
-	logout: async ({ cookies }) => {
+	logout: async ({ cookies, locals }) => {
 		const token = cookies.get(SESSION_COOKIE);
-		if (token) await deleteSession(token);
+		if (token) await deleteSession(locals.db, token);
 		cookies.delete(SESSION_COOKIE, { path: '/' });
 		redirect(302, '/login');
 	},
@@ -33,11 +36,6 @@ export const actions: Actions = {
 		if (!locals.user) return redirect(302, '/login');
 
 		const formData = await request.formData();
-		// Note: date/time strings submitted by the browser (e.g. "2026-03-12T22:00") are
-		// interpreted as local time by `new Date()` on the server. In production (Cloudflare
-		// Workers, Node.js), the server timezone is UTC, so recordedAt will store the user's
-		// typed datetime as if it were UTC. This is an intentional MVP simplification — no
-		// timezone offset is submitted from the client.
 		const metricType = formData.get('metricType') ?? '';
 		const userId = locals.user.id;
 
@@ -52,7 +50,7 @@ export const actions: Actions = {
 				return fail(400, { metricType, errors: result.error.flatten().fieldErrors });
 			}
 			const recordedAt = new Date(`${result.data.date}T${result.data.time}`);
-			await db.insert(metricEntries).values({
+			await locals.db.insert(metricEntries).values({
 				userId,
 				metricType: 'weight',
 				valueNumeric: result.data.value,
@@ -73,7 +71,7 @@ export const actions: Actions = {
 				return fail(400, { metricType, errors: result.error.flatten().fieldErrors });
 			}
 			const recordedAt = new Date(`${result.data.date}T${result.data.time}`);
-			await db.insert(metricEntries).values({
+			await locals.db.insert(metricEntries).values({
 				userId,
 				metricType: 'blood_pressure',
 				valueNumeric: result.data.systolic,
@@ -97,7 +95,7 @@ export const actions: Actions = {
 			const bedDatetime = new Date(`${result.data.bedDate}T${result.data.bedTime}`);
 			const wakeDatetime = new Date(`${result.data.wakeDate}T${result.data.wakeTime}`);
 			const valueDuration = Math.round((wakeDatetime.getTime() - bedDatetime.getTime()) / 60000);
-			await db.insert(metricEntries).values({
+			await locals.db.insert(metricEntries).values({
 				userId,
 				metricType: 'sleep',
 				valueDuration,
@@ -119,7 +117,7 @@ export const actions: Actions = {
 			const startDatetime = new Date(`${result.data.workDate}T${result.data.startTime}`);
 			const endDatetime = new Date(`${result.data.workDate}T${result.data.endTime}`);
 			const valueDuration = Math.round((endDatetime.getTime() - startDatetime.getTime()) / 60000);
-			await db.insert(metricEntries).values({
+			await locals.db.insert(metricEntries).values({
 				userId,
 				metricType: 'work',
 				valueDuration,
@@ -132,14 +130,13 @@ export const actions: Actions = {
 	}
 };
 
-export const load: PageServerLoad = async ({ parent }) => {
+export const load: PageServerLoad = async ({ parent, locals }) => {
 	const { user } = await parent();
 
 	const [weightEntries, bpEntries, sleepEntries, workEntries] = await Promise.all(
-		METRIC_TYPES.map((type) => loadMetricSummary(user.id, type))
+		METRIC_TYPES.map((type) => loadMetricSummary(locals.db, user.id, type))
 	);
 
-	// Re-return user so PageData types include it and svelte-check passes
 	return {
 		user,
 		weight: weightEntries,

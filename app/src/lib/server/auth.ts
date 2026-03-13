@@ -1,5 +1,4 @@
 import bcrypt from 'bcryptjs';
-import { db } from './db';
 import { users, sessions } from './db/schema';
 import { eq } from 'drizzle-orm';
 
@@ -15,7 +14,8 @@ export async function verifyPassword(password: string, hash: string): Promise<bo
 	return bcrypt.compare(password, hash);
 }
 
-export async function createSession(userId: string): Promise<string> {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export async function createSession(db: any, userId: string): Promise<string> {
 	const expiresAt = new Date();
 	expiresAt.setDate(expiresAt.getDate() + SESSION_TTL_DAYS);
 
@@ -25,7 +25,8 @@ export async function createSession(userId: string): Promise<string> {
 	return session.id;
 }
 
-export async function validateSession(token: string) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export async function validateSession(db: any, token: string) {
 	const result = await db
 		.select()
 		.from(sessions)
@@ -35,13 +36,14 @@ export async function validateSession(token: string) {
 
 	if (!result) return null;
 	if (result.sessions.expiresAt < new Date()) {
-		await deleteSession(token);
+		await deleteSession(db, token);
 		return null;
 	}
 
 	return { user: result.users, session: result.sessions };
 }
 
-export async function deleteSession(token: string): Promise<void> {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export async function deleteSession(db: any, token: string): Promise<void> {
 	await db.delete(sessions).where(eq(sessions.id, token));
 }
