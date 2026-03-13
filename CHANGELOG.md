@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-03-13
+
+### Added
+- Metric detail pages for Weight, Blood Pressure, Sleep, and Work with full-width line chart, 7d/30d/90d/All time range picker, scrollable history list, and delete entry support
+- Shared `MetricDetailPage`, `MetricChart`, and `TimeRangePicker` components
+- Dashboard metric cards now show empty state when no entries exist
+- App logo (teal circular heartbeat mark) on login page and dashboard header
+- Show/hide password toggle on login and register forms
+- Seed script (`scripts/seed-test-user.ts`) to create a demo user with 30 days of realistic health data
+
+### Changed
+- Color scheme updated from warm/terracotta palette to teal palette derived from the app logo
+
 ## [0.1.0] - 2026-03-09
 
 ### Added
