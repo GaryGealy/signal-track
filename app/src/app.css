@@ -24,6 +24,15 @@
 		--input: 214.3 31.8% 91.4%;
 		--ring: 222.2 84% 4.9%;
 		--radius: 0.5rem;
+
+		/* Design B — Warmth tokens */
+		--color-bg: #faf7f2;
+		--color-surface: #ffffff;
+		--color-border: #efe8de;
+		--color-text-primary: #2c1a0e;
+		--color-text-muted: #9a7e6a;
+		--color-accent: #c4622d;
+		--color-accent-bg: #fdf0e8;
 	}
 }
 
@@ -32,7 +41,8 @@
 		border-color: hsl(var(--border));
 	}
 	body {
-		background-color: hsl(var(--background));
-		color: hsl(var(--foreground));
+		background-color: var(--color-bg);
+		color: var(--color-text-primary);
+		font-family: 'DM Sans', sans-serif;
 	}
 }
