@@ -1,60 +1,66 @@
-# About SignalTrack
+# SignalTrack
 
 ## Your signals, your story.
 
-SignalTrack is a personal health metrics tracker built for people who want a clear, honest picture of how their body and habits are trending — without the noise of a full wellness platform.
+Most health apps want to be your entire lifestyle. SignalTrack just wants to show you the truth about yours.
 
-Log what matters. See the trend. That's it.
-
----
-
-## What It Tracks
-
-SignalTrack focuses on four core signals that tell the most complete story of day-to-day health:
-
-| Signal | What you log |
-|--------|-------------|
-| **Weight** | Daily weight in lbs |
-| **Blood Pressure** | Systolic and diastolic readings (mmHg) |
-| **Sleep** | Duration in hours and minutes |
-| **Work Hours** | Time worked each day |
-
-These four signals together reveal patterns that individual measurements never show — the connection between a run of poor sleep and a blood pressure spike, or the effect of overwork on weight trends.
+No streaks. No badges. No algorithm deciding what's important. Just your numbers, your trends, and the clarity to act on them.
 
 ---
 
-## How It Works
+## Four signals. One clear picture.
 
-1. **Log an entry** — tap "+ Add" on any metric card and enter your reading. Takes five seconds.
-2. **See the trend** — each metric shows a sparkline on the dashboard and a full line chart on the detail page.
-3. **Change the timeframe** — switch between 7-day, 30-day, 90-day, and all-time views to zoom in or out on your story.
-4. **Review your history** — scroll through every entry on the detail page and delete anything logged in error.
+Your body tells a story through data — but only when you're looking at the right signals together. SignalTrack tracks the four that matter most:
 
----
+**Weight** — See the actual trend, not just today's number.
 
-## Who It's For
+**Blood Pressure** — Both readings, every time. Spot the pattern before your doctor has to.
 
-SignalTrack is for anyone who wants to take their health seriously without being overwhelmed by complexity. It's especially useful if you:
+**Sleep** — Hours in, hours out. Know what you're actually getting.
 
-- Are working with a doctor on blood pressure, weight, or sleep concerns
-- Want to understand how lifestyle changes affect your numbers over time
-- Prefer logging your own data over relying on wearables
-- Want something simple, fast, and private — not an app that gamifies your health
+**Work Hours** — Because burnout doesn't announce itself. Your data will.
+
+Individually, each signal is useful. Together, they're revealing — the night you sleep five hours and your blood pressure spikes, the week you overwork and the scale won't budge. SignalTrack connects those dots.
 
 ---
 
-## Privacy
+## Ruthlessly simple to use.
 
-Your data belongs to you. SignalTrack stores your entries in your own account, secured with session-based authentication. There are no ads, no data sharing, and no third-party analytics.
+Tap **+ Add**. Enter your reading. Done. Five seconds, every time.
+
+Your dashboard shows every signal at a glance with sparkline trends. Tap into any metric for a full chart, switch between 7-day, 30-day, 90-day, and all-time views, and scroll your complete history. Delete a bad entry with a single tap.
+
+No onboarding flow. No tutorial. You'll figure it out in thirty seconds.
 
 ---
 
-## What's Coming
+## Built for people who are serious about their health — not obsessed with it.
 
-SignalTrack is in active development. On the roadmap:
+SignalTrack is for you if:
 
-- Custom metrics — track anything, not just the built-in four
-- Goals and alerts — get notified when a metric trends outside your target range
-- CSV import/export — bring in historical data and take it with you
-- Wearable integrations — sync automatically instead of logging manually
-- AI trend insights — surface patterns you might not notice on your own
+- Your doctor asked you to track your blood pressure and you want something better than a notes app
+- You've made a lifestyle change and want to see whether it's actually working
+- You're done with wearables that require charging, syncing, and a subscription to read your own data
+- You want an app that respects your intelligence — and your privacy
+
+---
+
+## Your data. Full stop.
+
+No ads. No data brokers. No "insights" that are really just upsells. Your entries live in your account and go nowhere else. SignalTrack doesn't make money from your health data — it just helps you understand it.
+
+---
+
+## This is just the beginning.
+
+SignalTrack is shipping fast. Coming next:
+
+- **Custom metrics** — track anything that matters to you, not just the built-in four
+- **Goals & alerts** — set a target range and get notified when a signal drifts outside it
+- **CSV import/export** — bring your history in, take it with you if you leave
+- **Wearable sync** — log automatically from your device instead of manually
+- **AI trend insights** — surface the patterns in your data that you haven't noticed yet
+
+---
+
+*SignalTrack is currently in active development.*
