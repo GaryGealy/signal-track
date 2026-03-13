@@ -82,6 +82,16 @@
 	>
 		{#if chartPoints.length >= 2}
 			<MetricChart points={chartPoints} {formatY} />
+		{:else if chartPoints.length === 1}
+			<!-- One entry — not enough for a trend line -->
+			<div class="flex flex-col items-center justify-center gap-2 py-8">
+				<p class="text-[14px] font-medium" style="color: var(--color-text-primary);">
+					Add one more entry to see your trend.
+				</p>
+				<p class="text-[12px]" style="color: var(--color-text-muted);">
+					You need at least 2 data points for a chart.
+				</p>
+			</div>
 		{:else}
 			<!-- Empty state (design spec §8) -->
 			<div class="flex flex-col items-center justify-center gap-3 py-10">
