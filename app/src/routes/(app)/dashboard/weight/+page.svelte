@@ -1,0 +1,40 @@
+<script lang="ts">
+	import { User } from 'lucide-svelte';
+	import MetricDetailPage from '$lib/components/MetricDetailPage.svelte';
+	import type { ChartPoint } from '$lib/components/MetricChart.svelte';
+	import type { HistoryItem } from '$lib/components/MetricDetailPage.svelte';
+
+	let { data, form } = $props();
+
+	const chartPoints: ChartPoint[] = $derived(
+		data.entries.map((e) => ({
+			date: e.recordedAt,
+			primary: e.valueNumeric ?? 0
+		}))
+	);
+
+	const historyItems: HistoryItem[] = $derived(
+		data.entries
+			.slice()
+			.reverse()
+			.map((e) => ({
+				id: e.id,
+				date: e.recordedAt,
+				primaryDisplay: e.valueNumeric?.toFixed(1) ?? '—',
+				unit: 'lbs'
+			}))
+	);
+
+	const formatY = (v: number) => v.toFixed(1);
+</script>
+
+<MetricDetailPage
+	metric="weight"
+	title="Weight"
+	icon={User}
+	range={data.range}
+	{chartPoints}
+	{historyItems}
+	{form}
+	{formatY}
+/>
